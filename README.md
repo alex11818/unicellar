@@ -5,7 +5,7 @@ Single-cell reservoir model (SCRM) = material balance equation (MBE) + analytica
 SCRM is solved for pressure to forecast pressure dynamics for known fluid production/injection scenarios.  
 Alternatively, MBE may be solved for ultimate storage capacity (USC) to get an estimate of the maximal fluid volume that can be stored in the reservoir at a given pressure and cumulative production/injection.
 
-## use cases:
+## Use cases:
 1. to history-match the reservoir pressure dynamics by tuning reservoir and aquifer parameters
 2. to quickly estimate the Ultimate Storage Capacity (USC) of the reservoir
 for different reservoir parameters and storage scenarios.
