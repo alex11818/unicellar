@@ -2,12 +2,12 @@
 Python library to quickly set up and run single-cell reservoir models of CO2/H2 storages and petroleum fields
 
 Single-cell reservoir model (SCRM) = material balance equation (MBE) + analytical aquifer  
-SCRM is solved for pressure to forecast pressure dynamics for known fluid production/injection scenario.
+SCRM is solved for pressure to forecast pressure dynamics for known fluid production/injection scenarios.  
 Alternatively, MBE may be solved for ultimate storage capacity (USC) to get an estimate of the maximal fluid volume that can be stored in the reservoir at a given pressure and cumulative production/injection.
 
 ## use cases:
 1. to history-match the reservoir pressure dynamics by tuning reservoir and aquifer parameters
-2. to quickly estimate ultimate storage capacity (USC) of the reservoir
+2. to quickly estimate the Ultimate Storage Capacity (USC) of the reservoir
 for different reservoir parameters and storage scenarios.
 3. to forecast reservoir pressure dynamics for a production/injection scenario
 4. to quickly set up a fast proxy model to support a full-field model's design and history matching 
