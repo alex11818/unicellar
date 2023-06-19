@@ -22,14 +22,6 @@ properties
 - to estimate the work required to compress a fluid from one pressure to another
 - to estimate bottomhole pressure (BHP) from tubing head pressure (THP) and vice versa through the column weight
 
-## On the model:
-A black oil formulation is employed for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
-The following components are currently available:
-- oil (with dissolved gas)
-- free gas that can dissolve in oil
-- water
-- CO2: an inert storage fluid that does not dissolve in other fluids. It can be CO2, H2, CH4 etc. 
-
 # Installation  
 1. Download or clone the library. 
 2. Navigate to the root folder containing setup.py by `cd`
@@ -37,8 +29,8 @@ The following components are currently available:
 (worked fine with Python 3.5/3.7/3.8)
 
 Unicellar is built on numpy, scipy, pandas, matplotlib, and plotly. 
-So there are no any exotic/esoteric dependencies, and you are likely to have already have met all the requirements. 
-Nevertheless, you may create a test environments in Anaconda package manager by running:
+So there are no exotic/esoteric dependencies, and you are almost certain to meet all the requirements. 
+Nevertheless, you may create a test environment in Anaconda package manager by:
 ```
 conda create -n uTest python=3.8
 conda activate -n uTest
@@ -51,6 +43,14 @@ Check out \examples (arranged by complexity):
 * single-cells.py
 * lbr1.py
 * oil+gas_cap+aquifer.py
+
+## On the model:
+A black oil formulation is employed for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
+The following components are currently available:
+- oil (with dissolved gas)
+- free gas that can dissolve in oil
+- water
+- CO2: an inert storage fluid that does not dissolve in other fluids. It can be CO2, H2, CH4 etc. 
 
 ## on the name choice
 UNICELLAR = unicellular (an organism that consists of a single cell) + 
