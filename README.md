@@ -25,7 +25,7 @@ properties
 # Installation  
 1. Download or clone the library. 
 2. Navigate to the root folder containing setup.py by `cd`
-3. run `pip install .`
+3. run `pip install .`  
 (worked fine with Python 3.5/3.7/3.8)
 
 Unicellar is built on numpy, scipy, pandas, matplotlib, and plotly. 
