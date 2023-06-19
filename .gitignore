@@ -1,0 +1,14 @@
+.vscode
+*.egg-info/
+.eggs/
+build/
+__pycache__/
+*.pyc
+
+tests/
+nist_tables/
+
+*.xlsx
+
+playgroung.py
+test.py
