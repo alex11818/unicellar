@@ -22,14 +22,13 @@ properties
 - to estimate the work required to compress a fluid from one pressure to another
 - to estimate bottomhole pressure (BHP) from tubing head pressure (THP) and vice versa through the column weight
 
-## on the model:
+## On the model:
 A black oil formulation is employed for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
 The following components are currently available:
 - oil (with dissolved gas)
 - free gas that can dissolve in oil
 - water
-- CO2: an inert storage fluid that does not dissolve in other fluids
-in oil, nor in water. It can be CO2, H2, CH4 etc.
+- CO2: an inert storage fluid that does not dissolve in other fluids. It can be CO2, H2, CH4 etc. 
 
 # Installation  
 1. Download or clone the library. 
