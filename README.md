@@ -20,7 +20,7 @@ It also features functions:
 properties
 - to fetch various PVT properties from the NIST database [1] 
 - to estimate the work required to compress a fluid from one pressure to another
-- estimate bottomhole pressure (BHP) from tubing head pressure (THP) and vice versa via a column weight
+- to estimate bottomhole pressure (BHP) from tubing head pressure (THP) and vice versa through the column weight
 
 ## on the model:
 A black oil formulation is employed for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
