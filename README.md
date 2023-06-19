@@ -41,8 +41,8 @@ Check out \examples (arranged by complexity):
 * radial_aquifer.py
 * gas_storage.py
 * single-cells.py
-* lbr1.py
 * oil+gas_cap+aquifer.py
+* lbr1.py
 
 ## On the model:
 A black oil formulation is employed for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
