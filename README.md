@@ -22,10 +22,6 @@ properties
 - to estimate the work required to compress a fluid from one pressure to another
 - estimate bottomhole pressure (BHP) from tubing head pressure (THP) and vice versa via a column weight
 
-## on the name choice
-UNICELLAR = unicellular (an organism that consists of a single cell) + 
-cellar (an underground storage room)
-
 ## on the model:
 A black oil formulation is employed for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
 The following components are currently available:
@@ -56,6 +52,10 @@ Check out \examples (arranged by complexity):
 * single-cells.py
 * lbr1.py
 * oil+gas_cap+aquifer.py
+
+## on the name choice
+UNICELLAR = unicellular (an organism that consists of a single cell) + 
+cellar (an underground storage room)
 
 # Acknowledgements
 This code has been developed in the REPP-CO2, STRATEGY CCUS, and CO2-SPICER projects.
