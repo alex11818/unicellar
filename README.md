@@ -1,11 +1,9 @@
 # unicellar 0.1.0. Single-cell reservoir modeling toolbox
 Python library to quickly set up and run single-cell reservoir models of CO2/H2 storages and petroleum fields
 
-Single-cell reservoir model (SCRM) = material balance equation (MBE) + analytical aquifer 
-SCRM is solved for pressure to forecast pressure dynamics for known fluid 
-production/injection scenario.
-Alternatively, MBE may be solved for ultimate storage capacity (USC) to get an estimate of maximal fluid volume can be stored in the reservoir at a given pressure and 
-cumulative production/injection.
+Single-cell reservoir model (SCRM) = material balance equation (MBE) + analytical aquifer  
+SCRM is solved for pressure to forecast pressure dynamics for known fluid production/injection scenario.
+Alternatively, MBE may be solved for ultimate storage capacity (USC) to get an estimate of the maximal fluid volume that can be stored in the reservoir at a given pressure and cumulative production/injection.
 
 ## use cases:
 1. to history-match the reservoir pressure dynamics by tuning reservoir and aquifer parameters
@@ -73,5 +71,3 @@ The REPP-CO2 project was supported by Norway Grants from the CZ-08 Carbon Captur
 
 2. Hladik V. et al., "LBr-1 – Research CO2 Storage Pilot in the Czech Republic", 
     DOI:10.1016/j.egypro.2017.03.171
-
-# FAQ
