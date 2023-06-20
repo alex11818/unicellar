@@ -2021,6 +2021,9 @@ def usc_run(case, print_log=False, print_warnings=True):
     water = (True if case.fluids.water is not None else False)
     co2 = (True if case.fluids.co2 is not None else False)
 
+    if case.fluids.co2 is None:
+        raise ValueError('case.fluids.co2==None: CO2 PVT props not set')
+
     p0 = case.reservoir.p0
     pv0 = 0  # pore volume
     if water:
@@ -2056,8 +2059,15 @@ def usc_run(case, print_log=False, print_warnings=True):
         bg0 = fvf_gas(p0)
         # oil should always contain gas
         if oil:
+            pb = case.fluids.oil.rs_table.iloc[:, 0]
+            rs = case.fluids.oil.rs_table.iloc[:, 1]
+            pb_of_rs = interp1d(rs, pb, kind='linear',
+                                fill_value="extrapolate")
+            rs_of_pb = interp1d(pb, rs, kind='linear',
+                                fill_value="extrapolate")
+                        
             if case.reservoir.rs0 is None:
-                rs0 = rs_of_pb(p[0])
+                rs0 = rs_of_pb(p0)
                 if print_log:
                     print( f'rs0 is not specified => estimated from rs_table: {rs0:.2f} sm3/sm3')
             else:
@@ -2071,12 +2081,7 @@ def usc_run(case, print_log=False, print_warnings=True):
             y = case.fluids.oil.co_table.iloc[:, 1]
             co_of_pb = interp1d(x, y, fill_value="extrapolate")
             del x, y          
-            pb = case.fluids.oil.rs_table.iloc[:, 0]
-            rs = case.fluids.oil.rs_table.iloc[:, 1]
-            pb_of_rs = interp1d(rs, pb, kind='linear',
-                                fill_value="extrapolate")
-            rs_of_pb = interp1d(pb, rs, kind='linear',
-                                fill_value="extrapolate")
+
             del rs, pb
             oip0 = case.reservoir.stoiip
             pb0 = pb_of_rs(rs0)

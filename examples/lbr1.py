@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-import datetime
+from datetime import datetime
 
 #%% Case set up
 fdir = os.path.dirname(__file__) # directory of the file
@@ -39,13 +39,20 @@ oil_pvt = uc.Fluids.Oil(fvf_table=lbr1_pvt[['pressure (bar)','oil FVF (rm3/sm3)'
                      rs_table =lbr1_pvt[['pressure (bar)','Rs (sm3/sm3)']])
 gas_pvt = uc.Fluids.Gas(fvf_table=lbr1_pvt[['pressure (bar)','gas FVF (rm3/sm3)']])
 wat_pvt = uc.Fluids.Water(cw=4e-5)
-pvt = uc.Fluids(oil=oil_pvt, gas=gas_pvt, water=wat_pvt)
+
+fvf_table = uc.get_fluid_properties(\
+    fluid='CO2', p_min=10, p_max=300, p_inc=10, degC=40, den_sc=1.8472)
+fvf_table = fvf_table[['Pressure (bar)','FVF']]
+
+co2_pvt = uc.Fluids.CO2(fvf_table=fvf_table)
+# putting everything into the PVT model
+pvt = uc.Fluids(oil=oil_pvt, gas=gas_pvt, water=wat_pvt, co2=co2_pvt)
 
 #  pressure measurements
 pm_table = pd.read_csv(fdir + r".\data\lbr1_pressure_measurements.csv")
 pm = uc.PressureMeasurements(data=pm_table, 
-                                date_format='dd.mm.yyyy', 
-                                start_date=datetime.datetime(1957,1,1))
+                             date_format='dd.mm.yyyy', 
+                             start_date=datetime(1957,1,1))
 
 # aquifers
 aq1 = uc.Aquifer.Fetkovich(pi=20, v=20e+8)
@@ -76,3 +83,18 @@ lbr_case4.run(print_log=False)
 fig=uc.plotly_chart([lbr_case1, lbr_case2, lbr_case3, lbr_case4], \
                       title='LBR-1 cases')
 fig.show(renderer='browser')
+
+
+# %% estimating USC
+for case in [lbr_case1, lbr_case2, lbr_case3, lbr_case4]:
+    # preparing a USC template. Historical cumulatives will be used
+    case.usc = uc.usc_template(reservoir=case.reservoir, flows=case.flows)
+    # some edits
+    case.usc.loc[0,'p_max'] = case.usc.loc[1,'p_max']
+    case.usc.loc[0,'comment'] = 'no production'
+    case.usc.loc[1,'comment'] = 'after production'
+
+    case.usc_run(print_log=False)
+    print(f'\nUCS table for "{case.name}":')
+    print(case.usc[['p_max', 'oil_prod', 'gas_prod', 'wat_prod', \
+                    'comment', 'fluid','Rs', 'USC (sm3)','USC (t)']])
