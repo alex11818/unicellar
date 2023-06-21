@@ -52,7 +52,7 @@ The following components are currently available:
 - water
 - CO2: an inert storage fluid that does not dissolve in other fluids. It can be CO2, H2, CH4 etc. 
 
-## on the name choice
+## On the name choice:
 UNICELLAR = unicellular (an organism that consists of a single cell) + 
 cellar (an underground storage room)
 
