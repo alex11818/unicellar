@@ -103,6 +103,9 @@ def multiplot(df, vectors, axes={}, x='index', fig = None,
     '''
     if fig is None:
         fig = go.Figure()   
+    else:
+        # to avoid changes in fig
+        fig = copy.deepcopy(fig)
         
     vd = copy.deepcopy(vectors)
     ad = copy.deepcopy(axes)
