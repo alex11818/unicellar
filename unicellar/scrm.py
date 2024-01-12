@@ -1527,7 +1527,7 @@ def run(case, jmax=10, max_error=1e-12, \
     --------    
     case.results : pd.DataFrame
         simulation results
-        '''
+    '''
     num_steps = len(case.flows.totals.index)
     t = case.flows.rates.days
     cf = case.reservoir.cf
@@ -2085,12 +2085,13 @@ def usc_run(case, print_log=False, print_warnings=True):
             del rs, pb
             oip0 = case.reservoir.stoiip
             pb0 = pb_of_rs(rs0)
-            bo0 = fvf_oil(pb0)*(1 - (p0 - pb0)*co_of_pb(pb0))
+            # bo0 = fvf_oil(pb0)*(1 - (p0 - pb0)*co_of_pb(pb0))
+            bo0 = fvf_oil(pb0)*np.exp((pb0 - p0)*co_of_pb(pb0))
             gips0 = oip0*rs0
             gipf0 -= gips0
-            if gipf0 < 0:
+            if gipf0/gip0 < -1e-6:
                 raise ValueError(
-                    'gipf0<0 free gas is negative /n check the input rs')
+                    'free gas is negative /n check the input rs')
             pv0 += oip0*bo0
         pv0 += gipf0*bg0
 
@@ -2188,7 +2189,8 @@ def usc_run(case, print_log=False, print_warnings=True):
                     rs = min([rs0, rss])
 
                 pb = pb_of_rs(rs)
-                bo = fvf_oil(pb)*(1 - (p - pb)*co_of_pb(pb))
+                # bo = fvf_oil(pb)*(1 - (p - pb)*co_of_pb(pb))
+                bo = fvf_oil(pb)*np.exp((pb - p)*co_of_pb(pb))
 
                 B += oip0*bo0
                 C += oip0*(bo - bo0)
@@ -2262,14 +2264,14 @@ def usc_template(flows=None, reservoir=None):
     '''
 
     df = pd.DataFrame({'p_max': [None, None],
-                       'oil_prod': [0, 0],
-                       'gas_prod': [0, 0],
-                       'wat_prod': [0, 0],
-                       'co2_prod': [0, 0],
-                       'oil_inj':  [0, 0],
-                       'gas_inj':  [0, 0],
-                       'wat_inj':  [0, 0],
-                       'co2_inj':  [0, 0],
+                       'oil_prod': [0.0, 0.0],
+                       'gas_prod': [0.0, 0.0],
+                       'wat_prod': [0.0, 0.0],
+                       'co2_prod': [0.0, 0.0],
+                       'oil_inj':  [0.0, 0.0],
+                       'gas_inj':  [0.0, 0.0],
+                       'wat_inj':  [0.0, 0.0],
+                       'co2_inj':  [0.0, 0.0],
                        'comment': ['scenario #0', 'scenario #1']
                        })
     df['fluid'] = 'CO2'
@@ -2283,6 +2285,6 @@ def usc_template(flows=None, reservoir=None):
     if flows is not None:
         for i in flows.totals.columns:
             if ('prod' in i) | ('inj' in i):
-                df.loc[1, i] = flows.totals[i].iloc[-1]
+                df.loc[1, i] = flows.totals.loc[:,i].iloc[-1]
 
     return df
