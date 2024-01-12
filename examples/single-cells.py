@@ -13,6 +13,10 @@ approximation of compressibility from PVTO
 
 # %% 
 import os
+
+import sys
+sys.path.append(r'C:\Users\alkh\OneDrive - NORCE\Python_codes\unicellar')
+
 import unicellar as uc
 import datetime
 import pandas as pd
@@ -94,9 +98,9 @@ sc_case2.run()
 
 
 #%% Plotting two cases
-fig=uc.plotly_chart([sc_case1, sc_case2], xaxis='days')
+fig=uc.plotly_chart([sc_case1, sc_case2], xaxis='days', rate_mode='mass')
 
-#how to add lines on the chart
+# how to add lines on the chart
 vd1 = {
     'FPR': {'yaxis': 'y2', 'name': 'FPR (PVCO)', 'mode': 'markers',
             'legendgroup': 'sim. pressures (e100)',
@@ -105,12 +109,10 @@ vd1 = {
             'line': {'width': 2, 'dash': 'dash'}},      
      }  
 
-fig = uc.multiplot(SC1[0], vd1, {}, x='index', renderer='browser', fig=fig)
+fig = uc.multiplot(SC1[0], vd1, {}, x='index', fig=fig)
 
 vd2 = vd1.copy()
 vd2['FPR']['name']='FPR (PVTO)'
 vd2['FPR']['marker'] = {'color': 'red', 'size': 5, 'symbol': 'diamond'}
 
 fig = uc.multiplot(SC2[0], vd2, {}, x='index', renderer='browser', fig=fig)
-
-fig.show(renderer='browser')

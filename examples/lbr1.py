@@ -1,6 +1,16 @@
 
 """
-Example based on LBR-1 reservoir (DOI:10.1016/j.egypro.2017.03.1712)
+Example based on LBR-1 reservoir study (DOI:10.1016/j.egypro.2017.03.1712):
+A depleted petroleum reservoir in the Czech Republic which was produced in 
+1950-1970. There are many uncertainties, particularly:
+1. initial pressure 
+2. aquifer parameters
+3. somewhat patchy production history
+
+This example demonstrates:
+1. how to set up a SCRM model
+2. how to set up sensitivity runs
+3. how to estimate Ultimate Storage Capacity
 """
 
 # %%
@@ -14,8 +24,8 @@ from datetime import datetime
 
 #%% Case set up
 fdir = os.path.dirname(__file__) # directory of the file
-
-res1 = uc.Reservoir(k=100, h=5, p0=113, poro=0.25, cf = 1e-4, 
+p0 = 113 # (bar) initial pressure
+res1 = uc.Reservoir(k=100, h=5, p0=p0, poro=0.25, cf = 1e-4, 
                     stoiip=9.0087E+05, giip=1.4627E+08, wiip=3603480.0)
 prod_inj_table = pd.read_csv(fdir + r"\data\lbr1_production.csv", delimiter=';')
 prod_inj_table['wat_inj'] = 0
@@ -31,6 +41,8 @@ res4.wiip = 2e+8
 
 # Flows
 flws = uc.Flows(data=prod_inj_table, date_format='dd.mm.yyyy', cumulative=False)
+# adding additional empty timesteps
+flws.add_rows(t=datetime(2004,1,1),num_rows=24)
 
 # Fluids:
 lbr1_pvt = pd.read_csv(fdir + r".\data\lbr1_pvt.csv")
@@ -81,11 +93,10 @@ lbr_case3.run(print_log=False)
 lbr_case4.run(print_log=False)
 
 fig=uc.plotly_chart([lbr_case1, lbr_case2, lbr_case3, lbr_case4], \
-                      title='LBR-1 cases')
+                      title='LBR-1 cases', show_aquifer_pressure=True)
 fig.show(renderer='browser')
 
-
-# %% estimating USC
+# %% Estimating USC. Calculating and printing out UCS tables
 for case in [lbr_case1, lbr_case2, lbr_case3, lbr_case4]:
     # preparing a USC template. Historical cumulatives will be used
     case.usc = uc.usc_template(reservoir=case.reservoir, flows=case.flows)
@@ -97,4 +108,29 @@ for case in [lbr_case1, lbr_case2, lbr_case3, lbr_case4]:
     case.usc_run(print_log=False)
     print(f'\nUCS table for "{case.name}":')
     print(case.usc[['p_max', 'oil_prod', 'gas_prod', 'wat_prod', \
-                    'comment', 'fluid','Rs', 'USC (sm3)','USC (t)']])
+                    'comment', 'fluid','Rs',
+                    'USC (sm3)','USC (rm3)','USC (t)']])
+
+# %% Getting more UCS points after production and plotting them
+for case in [lbr_case1, lbr_case2, lbr_case3, lbr_case4]:
+
+    # p_max/p0    
+    p_max_to_p0 = np.array([1.0, 1.05, 1.1, 1.15, 1.20, 1.25])
+    # fetching and adding the last reservoir pressure
+    p_last = case.results['pressure (bar)'].iloc[-1]
+    if p_last<p0:
+        p_max_to_p0=np.insert(p_max_to_p0, 0, p_last/p0)
+
+    # preparing a USC template. Historical cumulatives will be used
+    temp = uc.usc_template(reservoir=case.reservoir, flows=case.flows)
+    case.usc = pd.DataFrame(columns=temp.columns)   
+    # looping through p_max/p0
+    for n,x in enumerate(p_max_to_p0):
+        case.usc.loc[n,:] = temp.loc[1,:]
+        case.usc.loc[n,'p_max'] = p0*x
+        case.usc.loc[n,'comment']=f'p_max={x:.2f}*p0'
+
+    case.usc_run(print_log=False)
+    print(f'\nUCS table for "{case.name}":')
+    print(case.usc[['p_max','oil_prod','gas_prod','wat_prod','comment', \
+                    'USC (rm3)', 'USC (sm3)','USC (t)']])

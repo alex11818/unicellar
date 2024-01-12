@@ -2,8 +2,12 @@
 Simple case to test aquifer models and showcase plotters
 '''
 #%% 
+import sys
+sys.path.append(r'C:\Users\alkh\OneDrive - NORCE\Python_codes\unicellar')
+
 import unicellar as uc
 import pandas as pd
+import numpy as np
 import os
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
@@ -42,7 +46,13 @@ print(flows)
 
 # Fluids (PVT properties)
 wat_pvt = uc.Fluids.Water(cw = 4e-5)
-fluids = uc.Fluids(water = wat_pvt)
+
+fvf_table = np.array([[1.013,1.12991], [40,0.02397], [55,0.01598], [60,0.01406], 
+[80,0.00882], [100,0.00525],[120,0.00338], [140,0.00287], [160,0.00265], [180,0.00251], 
+[250,0.00227], [400,0.00204]])
+pvt_co2 = uc.Fluids.CO2(fvf_table=fvf_table, density=1.842)
+
+fluids = uc.Fluids(water = wat_pvt, co2=pvt_co2)
 
 # Reservoir properties
 p0 = 100       # pressure, bar
@@ -132,6 +142,13 @@ fig=uc.multiplot(rr['f_1gb'][0], vd, ad, fig=fig,\
                          )
 
 # fig=uc.multiplot(rr['f_1gb'][0], vd, ad, fig=fig)
-
-
 fig.show(renderer='browser')
+
+# estimating and printing ultimate storage capacity (USC)
+mdl.usc = uc.usc_template(flows=flows, reservoir=res)
+# additional step to check
+mdl.usc.loc[2,:] = mdl.usc.loc[1,:]
+mdl.usc.loc[2,'p_max'] = mdl.results.loc[:,'pressure (bar)'].iloc[-1]
+# run
+mdl.usc_run()
+print(mdl.usc)
