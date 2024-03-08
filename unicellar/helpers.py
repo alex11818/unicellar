@@ -601,7 +601,7 @@ def read_pvdg(p, units='metric'):
     pvdg : pd.DataFrame with raw PVDG data 
     '''
     # reading the keyword
-    f = open(p, 'r')
+    f = open(p, 'r', errors='replace')
 
     pr, fvf, visc = [], [], []
 
@@ -682,7 +682,7 @@ def read_pvco(p, units='metric'):
         raw PVTO data  
     '''
     # reading the keyword
-    f = open(p, 'r')
+    f = open(p, 'r', errors='replace')
 
     pr, rs, fvf, visc, co, viscosibility = [], [], [], [], [], []
 
@@ -786,7 +786,7 @@ def read_pvto(p, units='metric', co_est_ind='0:', plot=True):
     i1 = 0  # block index
     i2 = 0  # line index within a block
 
-    f = open(p, 'r')
+    f = open(p, 'r', errors='replace')
     for line in f:
         a = line.split()
         if len(a) > 0 and a[0] == 'PVTO': break 
