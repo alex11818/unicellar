@@ -615,8 +615,8 @@ def read_pvdg(p, units='metric'):
         while c < c_max:
             c += 1
             a = f.readline().split()
-            # to pass '--'
-            while a[0][:2]=='--':
+            # to pass empty strings and '--'
+            while (len(a)==0) or (a[0][:2]=='--'):
                 a = f.readline().split()
 
             # to remove '--abcdef sd' from lines like 'x y z --abcdef sd'
@@ -696,8 +696,8 @@ def read_pvco(p, units='metric'):
         while c < c_max:
             c += 1
             a = f.readline().split()
-            # to pass '--'
-            while a[0][:2]=='--':
+            # to pass empty strings and '--'
+            while (len(a)==0) or (a[0][:2]=='--'):
                 a = f.readline().split()
 
             # to remove '--abcdef sd' from lines like 'x y z --abcdef sd'
@@ -794,8 +794,8 @@ def read_pvto(p, units='metric', co_est_ind='0:', plot=True):
     if len(a) > 0 and a[0] == 'PVTO':
         # reading blocks
         a = f.readline().split()
-        # to pass '--'
-        while a[0][:2]=='--':
+        # to pass empty strings and '--'
+        while (len(a)==0) or (a[0][:2]=='--'):
             a = f.readline().split()
 
         c, c_max = 0, 10000
@@ -840,8 +840,8 @@ def read_pvto(p, units='metric', co_est_ind='0:', plot=True):
                 ind2.append(i2)
                 i2 += 1
             a = f.readline().split()
-            # to pass '--'
-            while a[0][:2]=='--':
+            # to pass empty strings and '--'
+            while (len(a)==0) or (a[0][:2]=='--'):
                 a = f.readline().split()
 
         f.close()
@@ -966,8 +966,8 @@ def read_pvtg(p, units='metric'):
     if len(a) > 0 and a[0] == 'PVTG':
         # reading blocks
         a = f.readline().split()
-        # to pass '--'
-        while a[0][:2]=='--':
+        # to pass empty strings and '--'
+        while (len(a)==0) or (a[0][:2]=='--'):
             a = f.readline().split()
 
         c, c_max = 0, 10000
@@ -1012,8 +1012,8 @@ def read_pvtg(p, units='metric'):
                 ind2.append(i2)
                 i2 += 1
             a = f.readline().split()
-            # to pass '--'
-            while a[0][:2]=='--':
+            # to pass empty strings and '--'
+            while (len(a)==0) or (a[0][:2]=='--'):
                 a = f.readline().split()
 
         f.close()
