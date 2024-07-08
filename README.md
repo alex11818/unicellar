@@ -45,7 +45,7 @@ Check out \examples (arranged by complexity):
 * lbr1.py
 
 ## On the model:
-A black oil formulation is employed for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
+A black oil formulation used for PVT props. is largely compatible with black oil reservoir simulators (like Eclipse, OPM, tNavigator etc.). 
 The following components are currently available:
 - oil (with dissolved gas)
 - free gas that can dissolve in oil
@@ -68,5 +68,7 @@ The REPP-CO2 project was supported by Norway Grants from the CZ-08 Carbon Captur
     Eds. P.J. Linstrom and W.G. Mallard, National Institute of Standards and Technology, 
     Gaithersburg MD, 20899, https://doi.org/10.18434/T4D303, (retrieved November 29, 2022).
 
-2. Hladik V. et al., "LBr-1 – Research CO2 Storage Pilot in the Czech Republic", 
-    DOI:10.1016/j.egypro.2017.03.171
+2. Hladik V. et al., "LBr-1 – Research CO2 Storage Pilot in the Czech Republic",  13th International Conference on Greenhouse Gas Control Technologies, GHGT-13, 14-18 November 2016, Lausanne, Switzerland, https://doi.org/10.1016/j.egypro.2017.03.1712
+
+3. Khrulenko, A., Berenblyum, R., "Single-cell reservoir model for CO2 storage planning", Conference poster, TCCS-12 (12th Trondheim Conference on CO2 Capture, Transport and Storage), 19-21 June 2023, Trondheim, Norway,
+   [poster URL](https://co2-spicer.geology.cz/sites/default/files/2023-08/250_poster_Khrulenko_SCRM%20for%20CO2%20storage%20planning.pdf)
