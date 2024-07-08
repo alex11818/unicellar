@@ -10,10 +10,13 @@ Alternatively, MBE can be solved for ultimate storage capacity (USC) to get an e
 2. to quickly estimate the Ultimate Storage Capacity (USC) of the reservoir
 for different reservoir parameters and storage scenarios.
 3. to forecast reservoir pressure dynamics for a production/injection scenario
-4. to quickly set up a fast proxy model to support a full-field model's design and history matching 
+4. to quickly set up a fast proxy model to support a full-field model's design and history matching  
+
+[This PDF](/docs/2023.02%20-%20TCCS12%20-%20SCRM%20for%20CO2%20storage%20planning_revised.pdf) in **/docs** describes an application to CO2 storage planning in a depleted petroleum reservoir [3].
+![fig2](https://github.com/alex11818/unicellar/assets/53487462/ef8c17de-7f41-4721-8461-ae14df87b4e6)
 
 ## OK. What else can it do?
-It also features functions:
+It also features the following functions:
 - to plot results in nice & neat Plotly charts 
 - to read Eclipse results from RSM files
 - to read Eclipse (E100) PVT keywords (PVTO, PVCO, PVTG, PVDG) to set up fluid 
