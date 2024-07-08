@@ -20,86 +20,86 @@ def multiplot(df, vectors, axes={}, x='index', fig = None,
     df : pd.DataFrame
         dataframe with data
         
-    vectors : dict
-        to specify line properties as plotly dictionaries 
-        For marker properties refer to https://plotly.com/python/marker-style/
-        For line properties refer to 
+    vectors : dict  
+        to specify line properties as plotly dictionaries  
+        For marker properties refer to https://plotly.com/python/marker-style/  
+        For line properties refer to  
         https://plotly.com/python-api-reference/generated/plotly.graph_objects.scatter.html#plotly.graph_objects.scatter.Line
         For colors refer to https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
         Example:         
-        vectors = {
+        vectors = {  
             'WWIR_W1':
-            {'yaxis': 'y', 'name': 'rate',
-             'mode': 'lines+markers',
-             'marker': {'color': 'royalblue', 'size': 4,
-                        'symbol': 'circle-open'},
-             'line': {'width': 2}},
-            'WBHP_W1':
-            {'yaxis': 'y3', 'name': 'BHP',
-             'mode': 'lines',
-             'line': {'color': 'red'},
-             'filter': "df['WWIR_W1']>100"}
-        }
-        Take a note that 'filter' record may be used to specify filtering 
-        as shown above.
+            {'yaxis': 'y', 'name': 'rate',  
+             'mode': 'lines+markers',  
+             'marker': {'color': 'royalblue', 'size': 4,  
+                        'symbol': 'circle-open'},  
+             'line': {'width': 2}},  
+            'WBHP_W1':  
+            {'yaxis': 'y3', 'name': 'BHP',  
+             'mode': 'lines',  
+             'line': {'color': 'red'},  
+             'filter': "df['WWIR_W1']>100"}  
+        }  
+        Take a note that 'filter' record may be used to specify filtering   
+        as shown above.  
         
-    axes : dict
-        to specify axes properties 
-        For colors refer to https://developer.mozilla.org/en-US/docs/Web/CSS/named-color
+    axes : dict  
+        to specify axes properties  
+        For colors refer to https://developer.mozilla.org/en-US/docs/Web/CSS/named-color  
         Example:       
-        axes = {
+        axes = {  
             'y': {'title': 'rate', 'color': 'dodgerblue'},     
-            'y2': {'title': 'pressure', 'color': 'red'},
+            'y2': {'title': 'pressure', 'color': 'red'},    
             'y3': {'title': 'abs(dp/dt)', 'color': 'orange'},       
         }        
         
-    x : str, optional
-        vector to be used as x-argument
-        if 'index' => df.index is used
-
-    fig : plotly figure
-        plotly figure to be used to add traces (see example below)       
+    x : str, optional  
+        vector to be used as x-argument   
+        if 'index' => df.index is used    
+    
+    fig : plotly figure  
+        plotly figure to be used to add traces (see example below)   
         
-    renderer : str, optional
-         to immidiately render the plot, options:  
-         * 'browser' - in browser  
-         * 'jupyterlab' inline in jupyterlab  
+    renderer : str, optional    
+         to immidiately render the plot, options:    
+         * 'browser' - in browser    
+         * 'jupyterlab' inline in jupyterlab    
          
     write_html : str, None, optional  
-        path to save html with the chart
-
-    layout_params : dict, optional
-        plotly layout parameters (refer plotly.com) to overwrite default ones
-        Example:
-        dict(font_size=16, template='plotly_white', title='all-in-one chart',\
-                legend=dict(yanchor="middle", y=0.5, xanchor="center", x=1.07, \
-                    groupclick="toggleitem"))        
-
-    Returns
-    -------
-    plotly figure 
+        path to save html with the chart  
+    
+    layout_params : dict, optional  
+        plotly layout parameters (refer plotly.com) to overwrite default ones  
+        Example:    
+        dict(font_size=16, template='plotly_white', title='all-in-one chart',  
+             legend=dict(yanchor="middle", y=0.5, xanchor="center", x=1.07,  
+             groupclick="toggleitem"))        
+    
+    Returns  
+    -------  
+    plotly figure  
         
-    Example
+    Example  
     --------
-    vd1 = {
-        'WWIR_W1': {'axis': 'y', 'name': 'rate', 
-                    'mode': 'lines',
+    vd1 = {  
+        'WWIR_W1': {'axis': 'y', 'name': 'rate',  
+                    'mode': 'lines',  
                     'marker': {'color': 'royalblue', 'size': 6, 'symbol': 'circle-open'},  
-                    'line': {'width': 2},
-                    'filter': "df["WWIR_W1"]>0"    # filter can be used
-                    },
-         }
-    ad1 = {'y': {'title': 'rate', 'color': 'dodgerblue'}}
+                    'line': {'width': 2},  
+                    'filter': "df["WWIR_W1"]>0"    # filter can be used  
+                    },  
+         }  
+    ad1 = {'y': {'title': 'rate', 'color': 'dodgerblue'}}  
     fig = aw_multiplot_(R_[0],x='index', vd=vd1, ad=ad1)
 
-    vd2 = {
-        'WBHP_W1': {'axis': 'y2',  'mode': 'lines',
-                    'name': 'BHP','color': 'red', 
-                    'line': {'color': 'red'},}
-         }
-    ad2 = {'y2': {'title': 'pressure', 'color': 'red'}}
-    fig = aw_multiplot_(R_[0],x='index', vd=vd2, ad=ad2, renderer='browser', fig=fig)
-    fig 
+    vd2 = {  
+        'WBHP_W1': {'axis': 'y2',  'mode': 'lines',  
+                    'name': 'BHP','color': 'red',   
+                    'line': {'color': 'red'},}  
+         }  
+    ad2 = {'y2': {'title': 'pressure', 'color': 'red'}}  
+    fig = aw_multiplot_(R_[0],x='index', vd=vd2, ad=ad2, renderer='browser', fig=fig)  
+    fig   
     '''
     if fig is None:
         fig = go.Figure()   
