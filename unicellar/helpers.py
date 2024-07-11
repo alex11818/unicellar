@@ -213,12 +213,12 @@ def estimate_compression_work(p0=1, p=200, degC=20, fluid='CO2', reload=True):
         p = np.array([p])
 
     p_max = max(p)
-    if p_max <= 450 and p0 == 1 and reload:
+    if p_max <= 1011 and p0 == 1 and reload:
         table = get_fluid_properties(
-            fluid, p_min=1, p_max=450, p_inc=1, degC=degC)
+            fluid, p_min=1, p_max=1011, p_inc=10, degC=degC)
     else:
         table = get_fluid_properties(
-            fluid, p_min=p0, p_max=p_max, p_inc=1, degC=degC)
+            fluid, p_min=p0, p_max=p_max, p_inc=10, degC=degC)
 
     h_func = interp1d(table['Pressure (bar)'], 1000*table['Enthalpy (kJ/kg)'])
     s_func = interp1d(table['Pressure (bar)'], 1000*table['Entropy (J/g*K)'])
@@ -238,7 +238,7 @@ def estimate_compression_work(p0=1, p=200, degC=20, fluid='CO2', reload=True):
     return w, q
 
 
-def get_fluid_properties(fluid='CO2', p_min=1, p_max=450, p_inc=1, degC=20, \
+def get_fluid_properties(fluid='CO2', p_min=1, p_max=1011, p_inc=10, degC=20, \
                          den_sc=None, process=True, nist_folder='nist_tables'):
 
     '''to fetch fluid property table from NIST Chemistry WebBook [1] and save it
