@@ -205,8 +205,7 @@ def plotly_chart(cases, renderer=None, \
     show_net_withdrawal=True,       
     show_wells = False,
     **layout_params):
-    '''
-    creates 'all-in-one' Plotly multichart of production profile and pressures
+    '''creates 'all-in-one' Plotly multichart of production profile and pressures
 
     Parameters
     ----------
