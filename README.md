@@ -27,8 +27,11 @@ properties
 
 # How to install 
 ## requirements
-Unicellar is built on numpy, scipy, pandas, matplotlib, and plotly (listed in **requirements.txt**). So there are no exotic/esoteric dependencies, and you are almost certain to meet all the requirements. 
-Nevertheless, if you use conda/mamba package manager (if you prefer to use `pip`, go to the next section), you may install the requirements in your current environment:  
+Unicellar is built on numpy, scipy, pandas, matplotlib, and plotly (listed in **requirements.txt**). 
+There are no exotic/esoteric dependencies, and you are almost certain to meet all the requirements. 
+Nevertheless, if you use `conda/mamba` package manager 
+(if you use `pip`, go to the next section), 
+you may install the requirements in your current environment:  
 ```
 conda install pandas scipy numpy matplotlib plotly -c conda-forge
 ```
@@ -36,7 +39,7 @@ conda install pandas scipy numpy matplotlib plotly -c conda-forge
 ```
 conda create -n uTest pandas scipy numpy matplotlib plotly -c conda-forge
 ```
-(you may replace "uTest" your environment name).  
+(you may replace "uTest" with your environment name).  
 
 ## installation
 1. Download or clone the library. 
@@ -44,7 +47,7 @@ conda create -n uTest pandas scipy numpy matplotlib plotly -c conda-forge
 3. run `pip install .`  
 
 ## using without installation
-Alternatively you may just download or clone the library
+Alternatively, you may just download or clone the library
 and call it from Python scripts or Jupyter notebooks as follows  
 (provided that your environment features the required packages):
 ```
@@ -52,7 +55,6 @@ import sys
 sys.path.append("path to the "unicellar" folder with  __init__.py")
 import unicellar
 ```
-
 
 # What to start with?
 Check out \examples (arranged by complexity):
