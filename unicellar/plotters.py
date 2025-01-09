@@ -243,7 +243,7 @@ def plotly_chart(cases, renderer=None, \
                 'gas_inj': 'tomato', 
                 'co2_inj': 'blueviolet',
                 'aquifer': 'dodgerblue'},
-            'cases': ['darkslategray', 'crimson', 'limegreen', 'turquoise',\
+            'cases': ['darkslategray', 'crimson', 'limegreen', 'turquoise',  
                  'orange', 'magenta']
             }
 
@@ -253,8 +253,8 @@ def plotly_chart(cases, renderer=None, \
             and line color (for '-open' markers)
         * marker['line']['color'] sets marker line color for 'circle', 'square' etc. markers  
         Default:
-        marker = {'size': 8, 'color': 'rgba(0,0,0,0.3)', \
-            'line': {'width': 1, 'color': 'rgb(60,60,60)'}},\   
+        marker = {'size': 8, 'color': 'rgba(0,0,0,0.3)',  
+                  'line': {'width': 1, 'color': 'rgb(60,60,60)'}}
 
     show_aquifer_pressure : bool, optional
         display aquifer pressure(s)
@@ -277,15 +277,14 @@ def plotly_chart(cases, renderer=None, \
         Examples:
         layout_params={'height': 700}
             or
-        dict(font_size=14, template='plotly_white', \
-            legend=dict(yanchor="top", y=-0.05, xanchor="center", \
+        dict(font_size=14, template='plotly_white',  
+            legend=dict(yanchor="top", y=-0.05, xanchor="center",  
                         x=0.5, groupclick="toggleitem", orientation='h'))
         Default layout parameters are:
-        default_layout_params = \
-            {
+        default_layout_params = {
             'template': 'plotly_white',
             'margin': {'b': 0, 'l': 0, 'r': 0,'t': 10},
-            'modebar_add': ['toggleHover','drawline', 'drawopenpath', \
+            'modebar_add': ['toggleHover','drawline', 'drawopenpath', 
             'drawclosedpath','drawcircle', 'drawrect','eraseshape',
             'toggleSpikelines']
             }
