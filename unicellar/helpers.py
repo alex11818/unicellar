@@ -12,7 +12,7 @@ import pickle
 import pandas as pd 
 from scipy.interpolate import interp1d
 from scipy.stats import linregress
-import os
+import os, requests, io
 import numpy as np
 import matplotlib.pyplot as plt
 from warnings import warn
@@ -238,9 +238,8 @@ def estimate_compression_work(p0=1, p=200, degC=20, fluid='CO2', reload=True):
     return w, q
 
 
-def get_fluid_properties(fluid='CO2', p_min=1, p_max=1011, p_inc=10, degC=20, \
+def get_fluid_properties(fluid='CO2', p_min=1, p_max=1011, p_inc=10, degC=20,
                          den_sc=None, process=True, nist_folder='nist_tables'):
-
     '''to fetch fluid property table from NIST Chemistry WebBook [1] and save it
     (by default) in a folder (created if needed inside the current directory)
     
@@ -329,24 +328,34 @@ def get_fluid_properties(fluid='CO2', p_min=1, p_max=1011, p_inc=10, degC=20, \
                     make_request = False
 
         if make_request:
-            rs = ('https://webbook.nist.gov/cgi/fluid.cgi?Action=Data&Wide=on&ID={0}&Type=IsoTherm&Digits=5&'
-                  + 'PLow={1}' + '&'
-                  + 'PHigh={2}' + '&'
-                  + 'PInc={3}' + '&'
-                  + 'T={4}' + '&' + 'RefState=DEF&TUnit=C&P'
-                  + 'Unit=bar' + '&'
-                  + 'DUnit=kg%2Fm3&HUnit=kJ%2Fkg&WUnit=m%2Fs&VisUnit=cP&STUnit=N%2Fm')
-            rs = rs.format(nist_id, p_min, p_max, p_inc, degC)
-            TT = pd.read_csv(rs, delimiter='\t')
+            # New URL format
+            rs = ('https://webbook.nist.gov/cgi/fluid.cgi?'
+                  + 'T={0}&'
+                  + 'PLow={1}&'
+                  + 'PHigh={2}&'
+                  + 'PInc={3}&'
+                  + 'Digits=5&'
+                  + 'ID={4}&'
+                  + 'Action=Data&'  # Use 'Data' not 'Load' to get CSV
+                  + 'Type=IsoTherm&'
+                  + 'TUnit=C&'
+                  + 'PUnit=bar&'
+                  + 'DUnit=kg%2Fm3&'
+                  + 'HUnit=kJ%2Fkg&'
+                  + 'WUnit=m%2Fs&'
+                  + 'VisUnit=uPa*s&'
+                  + 'STUnit=N%2Fm&'
+                  + 'RefState=DEF')
+            rs = rs.format(degC, p_min, p_max, p_inc, nist_id)
+            # print(rs) 
+            response = requests.get(rs)
+            response.raise_for_status()  # Raise an error for bad status codes
+            TT = pd.read_csv(io.StringIO(response.text), delimiter='\t')
             if nist_folder is not None:
                 TT.to_csv(out_file, index=False)
 
         if process:
             # dropping duplicated pressures near the critical point
-            #TT.drop_duplicates(subset=['Pressure (bar)', 'Phase'], inplace=True)
-            # A little trick to avoid interpolation errors at the critical point
-            #dupl = TT.duplicated(subset=['Pressure (bar)'], keep='last')
-            #TT.loc[dupl, 'Pressure (bar)'] = TT.loc[dupl, 'Pressure (bar)'] - 1e-6
             TT.drop_duplicates(
                 subset=['Pressure (bar)'], keep='last', inplace=True)
 
